@@ -1,0 +1,411 @@
+// 定数とデータベースは変更なし、上部のCHANNEL_ACCESS_TOKENとQUIZ_DATAはそのまま維持
+const CHANNEL_ACCESS_TOKEN =
+  "RMb6YxbUa0ge3AQq+j4ac9ZJTtOz0uoBnnBMylvei8bxqx6nLJ9t6US+2cglKNn4c/bi4fj1J8ej8264TN2/vUqYTm6NG+TzXxdBuw+3h0LQch0Gcb9Ec15hDODGDo6s6w3ej19dOLIHCGw83KHZdQdB04t89/1O/w1cDnyilFU=";
+
+// Quiz questions database
+const QUIZ_DATA = {
+  edo: [
+    {
+      title: "第一問",
+      question: "初代、江戸幕府の将軍は誰でしょう？",
+      options: ["徳川家康", "豊臣秀吉", "織田信長", "徳川綱吉"],
+      answer: "徳川家康",
+      kaisetsu:
+        "幕府の中心を江戸にしたのは京都を中心とした朝廷からの干渉を避けるためだったといわれています",
+    },
+    {
+      title: "第二問",
+      question: "江戸幕府の鎖国令が出されたのは何年？",
+      options: ["1639年", "1600年", "1700年", "1650年"],
+      answer: "1639年",
+      kaisetsu:
+        "1639年に日本は鎖国政策を徹底し、ポルトガルとの貿易を断絶しました。これはキリスト教の広がりを防ぐためでもありました。",
+    },
+    {
+      title: "第三問",
+      question: "江戸幕府が成立したのは何年でしょう？",
+      options: ["1603年", "1590年", "1615年", "1620年"],
+      answer: "1603年",
+      kaisetsu:
+        "1603年に徳川家康が征夷大将軍に任命され、正式に江戸幕府が成立しました。",
+    },
+    {
+      title: "第四問",
+      question: "江戸時代に幕府の役所が置かれた都市はどこでしょう？",
+      options: ["東京", "大阪", "江戸", "名古屋"],
+      answer: "江戸",
+      kaisetsu:
+        "江戸は現在の東京であり、江戸時代には日本の政治・経済の中心地として栄えました。",
+    },
+    {
+      title: "第五問",
+      question: "江戸時代の主要な貿易港はどこでしょう？",
+      options: ["横浜", "長崎", "大阪", "神戸"],
+      answer: "長崎",
+      kaisetsu:
+        "長崎は鎖国下でも唯一の貿易港として、オランダや中国との交流が行われていました。",
+    },
+    {
+      title: "第六問",
+      question:
+        "江戸時代の三大改革のうち、享保の改革を行った将軍は誰でしょう？",
+      options: ["徳川家康", "徳川吉宗", "徳川綱吉", "徳川家光"],
+      answer: "徳川吉宗",
+      kaisetsu:
+        "享保の改革は8代将軍徳川吉宗によって行われ、財政改善を目的としたさまざまな政策が実施されました。",
+    },
+    {
+      title: "第七問",
+      question: "江戸時代に発行された金貨の名前は何でしょう？",
+      options: ["一分金", "大判", "一両", "小判"],
+      answer: "小判",
+      kaisetsu:
+        "小判は江戸時代の金貨で、通貨として広く流通し、日本の貨幣制度を支えました。",
+    },
+    {
+      title: "第八問",
+      question: "江戸幕府の第五代将軍は誰でしょう？",
+      options: ["徳川家光", "徳川家綱", "徳川綱吉", "徳川家茂"],
+      answer: "徳川綱吉",
+      kaisetsu:
+        "徳川綱吉は「生類憐みの令」を発布し、動物の保護政策を推進したことで知られています。",
+    },
+    {
+      title: "第九問",
+      question: "江戸時代に農民が年貢として納めていたものは何でしょう？",
+      options: ["米", "銅", "銀", "布"],
+      answer: "米",
+      kaisetsu:
+        "江戸時代には米が主要な税として扱われ、農民は生産した米の一部を年貢として幕府や藩に納めました。",
+    },
+    {
+      title: "第十問",
+      question: "江戸時代に庶民の娯楽として人気があった演劇は何でしょう？",
+      options: ["歌舞伎", "能", "狂言", "相撲"],
+      answer: "歌舞伎",
+      kaisetsu:
+        "歌舞伎は江戸時代に庶民の娯楽として発展し、今も日本の伝統的な演劇として続いています。",
+    },
+  ],
+  meiji: [
+    {
+      title: "第一問",
+      question: "明治政府は何年にできたでしょうか？",
+      options: ["1868年", "1871年", "1854年", "1889年"],
+      answer: "1868年",
+      kaisetsu:
+        "1868年の明治維新により、江戸幕府が倒れ、新しい政府が誕生しました。",
+    },
+    {
+      title: "第二問",
+      question:
+        "明治時代に実施された学制改革で、小学校が義務化されたのは何年でしょうか？",
+      options: ["1872年", "1880年", "1877年", "1890年"],
+      answer: "1872年",
+      kaisetsu: "1872年に学制が公布され、小学校教育が義務化されました。",
+    },
+    {
+      title: "第三問",
+      question:
+        "明治政府が近代産業を促進するために設立した官営工場の一つで、現在の世界遺産にもなっているのはどこでしょう？",
+      options: ["富岡製糸場", "八幡製鉄所", "札幌ビール工場", "名古屋城"],
+      answer: "富岡製糸場",
+      kaisetsu:
+        "富岡製糸場は1872年に設立され、日本の近代産業の象徴として世界遺産に登録されています。",
+    },
+    {
+      title: "第四問",
+      question: "明治時代に制定された、日本初の近代的な憲法は何でしょう？",
+      options: ["大日本帝国憲法", "日本国憲法", "五箇条の御誓文", "改正律令"],
+      answer: "大日本帝国憲法",
+      kaisetsu:
+        "1889年に発布された大日本帝国憲法は、近代日本の初の成文憲法でした。",
+    },
+    {
+      title: "第五問",
+      question: "日清戦争が始まったのは何年でしょう？",
+      options: ["1894年", "1904年", "1877年", "1885年"],
+      answer: "1894年",
+      kaisetsu:
+        "1894年に日本と清の間で日清戦争が勃発し、日本が勝利を収めました。",
+    },
+    {
+      title: "第六問",
+      question:
+        "明治時代に実施された、土地に関する税制度の改革を何と呼ぶでしょう？",
+      options: ["地租改正", "開拓使設置", "税制改革", "租庸調制度"],
+      answer: "地租改正",
+      kaisetsu:
+        "地租改正は1873年に実施され、土地所有者に対して土地税を課す制度が確立されました。",
+    },
+    {
+      title: "第七問",
+      question:
+        "明治時代の日本が締結した、不平等条約の改正に成功したのは誰でしょう？",
+      options: ["伊藤博文", "井上馨", "大隈重信", "青木周蔵"],
+      answer: "伊藤博文",
+      kaisetsu:
+        "伊藤博文は不平等条約の改正に尽力し、日本の国際的地位の向上に貢献しました。",
+    },
+    {
+      title: "第八問",
+      question: "明治時代に発布された、教育に関する重要な勅語は何でしょう？",
+      options: ["教育勅語", "憲法発布", "修身の教え", "義務教育法"],
+      answer: "教育勅語",
+      kaisetsu:
+        "1890年に発布された教育勅語は、道徳と教育の基本方針を示したものです。",
+    },
+    {
+      title: "第九問",
+      question:
+        "明治時代に開通した、日本初の鉄道はどことどこを結んでいたでしょう？",
+      options: ["東京・横浜", "大阪・京都", "東京・大阪", "東京・仙台"],
+      answer: "東京・横浜",
+      kaisetsu:
+        "1872年に開通した日本初の鉄道は、東京の新橋と横浜を結びました。",
+    },
+    {
+      title: "第十問",
+      question: "明治時代の最後に行われた、アジアでの戦争は何でしょう？",
+      options: ["日露戦争", "日清戦争", "西南戦争", "戊辰戦争"],
+      answer: "日露戦争",
+      kaisetsu:
+        "1904年に勃発した日露戦争は、ロシアとの間で行われた戦争で、日本が勝利しました。",
+    },
+  ],
+  muromachi: [
+    {
+      title: "第一問",
+      question: "室町幕府を開いたのは誰でしょう？",
+      options: ["足利尊氏", "足利義満", "織田信長", "徳川家康"],
+      answer: "足利尊氏",
+      kaisetsu:
+        "足利尊氏は1336年に京都を制圧し、1338年に征夷大将軍となって室町幕府を開きました。",
+    },
+    {
+      title: "第二問",
+      question: "室町幕府の第三代将軍で、京都の金閣寺を建てたのは誰でしょう？",
+      options: ["足利尊氏", "足利義満", "足利義政", "豊臣秀吉"],
+      answer: "足利義満",
+      kaisetsu:
+        "足利義満は京都の北山に金閣寺を建設し、室町文化の繁栄に大きく貢献しました。",
+    },
+    {
+      title: "第三問",
+      question: "室町時代に起こった日本初の大規模な農民一揆は何でしょう？",
+      options: ["正長の土一揆", "天文の乱", "応仁の乱", "島原の乱"],
+      answer: "正長の土一揆",
+      kaisetsu:
+        "1428年に起こった正長の土一揆は、農民たちが年貢の軽減を求めて起こした大規模な一揆です。",
+    },
+    {
+      title: "第四問",
+      question: "1467年に始まった、室町幕府の衰退を象徴する戦乱は何でしょう？",
+      options: ["応仁の乱", "天文の乱", "享徳の乱", "山城の国一揆"],
+      answer: "応仁の乱",
+      kaisetsu:
+        "応仁の乱は1467年から1477年まで続き、全国の大名たちが対立し、戦国時代の幕開けとされます。",
+    },
+    {
+      title: "第五問",
+      question:
+        "室町時代の日本と中国の間で行われていた貿易を何と呼ぶでしょう？",
+      options: ["日明貿易", "南蛮貿易", "勘合貿易", "遣唐使貿易"],
+      answer: "勘合貿易",
+      kaisetsu:
+        "勘合貿易は足利義満が明と行った貿易で、勘合符という許可証を使って行われました。",
+    },
+    {
+      title: "第六問",
+      question:
+        "室町時代に成立した、武士が守るべき規範を記した法令は何でしょう？",
+      options: ["御成敗式目", "建武式目", "分国法", "後法式"],
+      answer: "建武式目",
+      kaisetsu:
+        "建武式目は室町幕府成立当初に制定された武士の規範ですが、実際の施行は限定的でした。",
+    },
+    {
+      title: "第七問",
+      question: "室町幕府の最後の将軍は誰でしょう？",
+      options: ["足利義満", "足利義教", "足利義政", "足利義昭"],
+      answer: "足利義昭",
+      kaisetsu:
+        "足利義昭は室町幕府の最後の将軍で、織田信長によって京都を追放され、幕府は終焉を迎えました。",
+    },
+    {
+      title: "第八問",
+      question: "室町時代に栄えた、禅宗の影響を受けた庭園様式は何でしょう？",
+      options: ["枯山水", "池泉庭園", "回遊式庭園", "日本庭園"],
+      answer: "枯山水",
+      kaisetsu:
+        "枯山水は禅宗の影響を受けた庭園様式で、石や砂を使って水を表現する特徴があります。",
+    },
+    {
+      title: "第九問",
+      question:
+        "室町時代の文化である、能の大成者として知られるのは誰でしょう？",
+      options: ["世阿弥", "清少納言", "足利義満", "松尾芭蕉"],
+      answer: "世阿弥",
+      kaisetsu:
+        "世阿弥は能を大成させた人物で、父の観阿弥とともに能楽の発展に寄与しました。",
+    },
+    {
+      title: "第十問",
+      question:
+        "室町時代後期に流行した絵画様式で、雪舟が代表的な画家とされるのは何でしょう？",
+      options: ["水墨画", "大和絵", "浮世絵", "琳派"],
+      answer: "水墨画",
+      kaisetsu:
+        "水墨画は中国から伝わった絵画様式で、室町時代には雪舟がこの様式を発展させました。",
+    },
+  ],
+};
+
+
+
+// ユーザーの進行状況を保存（PropertiesServiceを使用してより永続的に）
+function getUserProgress(userId) {
+  const userProperties = PropertiesService.getUserProperties();
+  const progress = userProperties.getProperty(userId);
+  return progress ? JSON.parse(progress) : null;
+}
+
+function setUserProgress(userId, progress) {
+  const userProperties = PropertiesService.getUserProperties();
+  userProperties.setProperty(userId, JSON.stringify(progress));
+}
+
+function deleteUserProgress(userId) {
+  const userProperties = PropertiesService.getUserProperties();
+  userProperties.deleteProperty(userId);
+}
+
+function doPost(e) {
+  const event = JSON.parse(e.postData.contents).events[0];
+  const replyToken = event.replyToken;
+  const userId = event.source.userId;
+
+  if (!replyToken) return;
+
+  if (event.type === "message" && event.message.type === "text") {
+    const userMessage = event.message.text;
+    handleMessage(replyToken, userId, userMessage);
+  }
+}
+
+function handleMessage(replyToken, userId, userMessage) {
+  // 検定開始の処理
+  if (userMessage.includes("検定を開始する")) {
+    let quizType;
+    if (userMessage === "江戸時代の検定を開始する") quizType = "edo";
+    else if (userMessage === "明治時代の検定を開始する") quizType = "meiji";
+    else if (userMessage === "室町時代の検定を開始する") quizType = "muromachi";
+
+    if (quizType) {
+      // ユーザーの進行状況を初期化
+      const progress = {
+        type: quizType,
+        currentQuestion: 0,
+        score: 0
+      };
+      setUserProgress(userId, progress);
+
+      // 開始メッセージと最初の問題を送信
+      const messages = [
+        {
+          type: "text",
+          text: "検定を開始します！全10問です。頑張ってください！"
+        },
+        createQuestionMessage(quizType, 0)
+      ];
+      sendLineMessage(replyToken, messages);
+      return;
+    }
+  }
+
+  // 回答の処理
+  const progress = getUserProgress(userId);
+  if (progress) {
+    const currentQuiz = QUIZ_DATA[progress.type];
+    const currentQ = currentQuiz[progress.currentQuestion];
+
+    // 選択肢に含まれる回答のみを処理
+    if (currentQ.options.includes(userMessage)) {
+      const isCorrect = userMessage === currentQ.answer;
+      if (isCorrect) {
+        progress.score++;
+      }
+
+      const messages = [];
+      
+      // 正誤判定のメッセージを追加
+      messages.push({
+        type: "text",
+        text: `${isCorrect ? "正解" : "不正解"}です！\n正解は「${currentQ.answer}」でした！\n${currentQ.kaisetsu}`
+      });
+
+      // 次の問題へ進む
+      progress.currentQuestion++;
+
+      // 検定が終了したかチェック
+      if (progress.currentQuestion >= 10) {
+        messages.push({
+          type: "text",
+          text: createResultMessage(progress.score)
+        });
+        deleteUserProgress(userId);
+      } else {
+        // 次の問題を追加
+        messages.push(createQuestionMessage(progress.type, progress.currentQuestion));
+        setUserProgress(userId, progress);
+      }
+
+      // メッセージを送信
+      sendLineMessage(replyToken, messages);
+    }
+  }
+}
+
+function createQuestionMessage(quizType, questionIndex) {
+  const question = QUIZ_DATA[quizType][questionIndex];
+  return {
+    type: "template",
+    
+    altText: question.question,
+    template: {
+      type: "buttons",
+      title: question.title,
+      text: question.question,
+      actions: question.options.map(option => ({
+        type: "message",
+        label: option,
+        text: option
+      }))
+    }
+  };
+}
+
+function createResultMessage(score) {
+  let resultMessage = `検定終了！\nあなたの得点は${score}点です！\n\n`;
+  
+  if (score === 10) resultMessage += "完璧な成績です！おめでとうございます！";
+  else if (score >= 7) resultMessage += "素晴らしい成績です！";
+  else if (score >= 4) resultMessage += "もう少し頑張りましょう！";
+  else resultMessage += "次回は頑張りましょう！";
+  
+  return resultMessage;
+}
+
+function sendLineMessage(replyToken, messages) {
+  UrlFetchApp.fetch("https://api.line.me/v2/bot/message/reply", {
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      Authorization: "Bearer " + CHANNEL_ACCESS_TOKEN,
+    },
+    method: "post",
+    payload: JSON.stringify({
+      replyToken: replyToken,
+      messages: messages
+    })
+  });
+}
