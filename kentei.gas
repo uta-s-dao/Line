@@ -1,6 +1,6 @@
-// 定数とデータベースは変更なし、上部のCHANNEL_ACCESS_TOKENとQUIZ_DATAはそのまま維持
+
 const CHANNEL_ACCESS_TOKEN =
-  "RMb6YxbUa0ge3AQq+j4ac9ZJTtOz0uoBnnBMylvei8bxqx6nLJ9t6US+2cglKNn4c/bi4fj1J8ej8264TN2/vUqYTm6NG+TzXxdBuw+3h0LQch0Gcb9Ec15hDODGDo6s6w3ej19dOLIHCGw83KHZdQdB04t89/1O/w1cDnyilFU=";
+  "CHANNEL_ACCESS_TOKEN";
 
 // Quiz questions database
 const QUIZ_DATA = {
