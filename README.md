@@ -11,11 +11,15 @@
 
 
 ## 主な機能
-- 江戸時代に関する10問の検定実施
+- 江戸、明治、安土桃山時代に関する10問の検定実施
 - 各問題に対する選択式回答
 - 回答後の正誤判定
 - 最終スコアの表示
-![S__24428564](https://github.com/user-attachments/assets/a6839b4d-611a-42af-aa25-584ea6b2c83c)
+
+
+https://github.com/user-attachments/assets/3d743e1e-ef53-4a03-bae3-57d1d3dd28a0
+
+
 
 
 以下のリンクを参考にAPIをつなげた
